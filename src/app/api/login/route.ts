@@ -3,7 +3,7 @@ import UserModel from "@/schemas/user.schema";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 
-export const POST = async (req: NextRequest, res: NextResponse) => {
+export const POST = async (req: NextRequest) => {
     try {
         const data = await req.json();
 
