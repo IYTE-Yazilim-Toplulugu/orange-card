@@ -25,3 +25,24 @@ body {
     text-wrap: balance;
   }
 }
+
+
+
+.inputStyle {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+}
+
+.inputStyle:focus {
+
+  border-color: rgba(205, 89, 17, 0.848);
+  box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgba(229, 103, 23, 0.6);
+  outline: 0 none;
+}
