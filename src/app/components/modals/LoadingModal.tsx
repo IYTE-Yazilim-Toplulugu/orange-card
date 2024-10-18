@@ -27,7 +27,7 @@ const LoadingModal = () => {
             ariaLabel='circles-with-bar-loading'
           />
           <p className="mt-6">
-            {lang == "tr" ? "Giriş İşlemi Sürüyor" : "Login Process is in Progress"}
+            {lang == "tr" ? "İşleminiz Sürüyor" : "Your Process is in Progress"}
           </p>
         </div>
     </Box>

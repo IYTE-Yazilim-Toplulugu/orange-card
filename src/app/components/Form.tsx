@@ -67,6 +67,10 @@ const Form = () => {
             </button>
         </div>
 
+        <button type='button' onClick={() => router.push("/forgot-password")} className='relative w-fit font-light text-lg px-2'>
+            <div className='w-full h-3 bg-blue-600/60 absolute top-3 blur-sm'></div>
+            {lang == "tr" ? "Şifremi Unuttum!" : "Forgot Password!"}
+        </button>
 
         <div className='flex justify-between items-center mt-4'>
             <h2 className='text-4xl font-bold'>

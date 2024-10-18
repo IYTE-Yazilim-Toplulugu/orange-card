@@ -12,6 +12,25 @@ const ModalContextState = {
 
     isLoading: false,
     setIsLoading: () => false,
+
+    isEmailSent: false,
+    setIsEmailSent: () => false,
+
+    isEmailNotSent: false,
+    setIsEmailNotSent: () => false,
+
+    email: "",
+    setEmail: () => "",
+
+    token: "",
+    setToken: () => "",
+
+    isPasswordCanChanged: false,
+    setIsPasswordCanChanged: () => false,
+
+    isPasswordCannotChanged: false,
+    setIsPasswordCannotChanged: () => false,
+
 }
 
 export type ModalContext = {
@@ -26,6 +45,24 @@ export type ModalContext = {
 
     isLoading: boolean,
     setIsLoading: Dispatch<SetStateAction<boolean>>;
+
+    isEmailSent: boolean,
+    setIsEmailSent: Dispatch<SetStateAction<boolean>>;
+
+    isEmailNotSent: boolean,
+    setIsEmailNotSent: Dispatch<SetStateAction<boolean>>;
+
+    email: String,
+    setEmail: Dispatch<SetStateAction<String>>;
+
+    token: String | null,
+    setToken: Dispatch<SetStateAction<String | null>>;
+
+    isPasswordCanChanged: boolean,
+    setIsPasswordCanChanged: Dispatch<SetStateAction<boolean>>;
+
+    isPasswordCannotChanged: boolean,
+    setIsPasswordCannotChanged: Dispatch<SetStateAction<boolean>>;
 }
 
 export const ModalContext = createContext<ModalContext>(ModalContextState);

@@ -20,7 +20,6 @@ const CardPage = () => {
     const [load, setLoad] = useState<boolean>(true);
     const [name, setName] = useState<string>();
     const [studentNo, setStudentNo] = useState<string>();
-    const [date, setDate] = useState<Date>();
     const [image, setImage] = useState<string>();
     const [userId, setUserId] = useState<string>();
 
@@ -101,10 +100,15 @@ const CardPage = () => {
                 const token = localStorage.getItem("token");
                 const res = await axios.post("../../api/token", {token : token});
                 if (res.status == 200) {
+                    let name : string = res.data.user.fullName;
+                    let newName : string = "";
+                    name.split(" ").map((n) => {
+                        newName += n.toUpperCase() + " ";
+                    })
+
                     setLoad(false);
-                    setName(res.data.user.fullName);
+                    setName(newName);
                     setStudentNo(res.data.user.schoolNumber);
-                    setDate(res.data.user.createdAt);
                     setUserId(res.data.user._id);
                     setImage(res.data.image?.image);
                 }
@@ -167,7 +171,7 @@ const CardPage = () => {
                         </div>
                         <div>
                             <label>Geçerlilik Tarihi:</label>
-                            <input type="text" name="name" value={`Eylül 2025 - (${date!.toString().split("T")[0]})`} disabled className='inputStyle font-bold italic text-black p-2 text-xl' />
+                            <input type="text" name="name" value={`Ekim 2025`} disabled className='inputStyle font-bold italic text-black p-2 text-xl' />
                         </div>
                     </div>
 
