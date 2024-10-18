@@ -39,8 +39,8 @@ export default function RootLayout({
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
     const [isEmailNotSent, setIsEmailNotSent] = useState<boolean>(false);
-    const [email, setEmail] = useState<String>("");
-    const [token, setToken] = useState<String | null>("");
+    const [email, setEmail] = useState<string>("");
+    const [token, setToken] = useState<string | null>("");
     const [isPasswordCanChanged, setIsPasswordCanChanged] = useState<boolean>(false);
     const [isPasswordCannotChanged, setIsPasswordCannotChanged] = useState<boolean>(false);
 

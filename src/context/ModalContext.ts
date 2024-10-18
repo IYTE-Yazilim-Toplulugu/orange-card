@@ -52,11 +52,11 @@ export type ModalContext = {
     isEmailNotSent: boolean,
     setIsEmailNotSent: Dispatch<SetStateAction<boolean>>;
 
-    email: String,
-    setEmail: Dispatch<SetStateAction<String>>;
+    email: string,
+    setEmail: Dispatch<SetStateAction<string>>;
 
-    token: String | null,
-    setToken: Dispatch<SetStateAction<String | null>>;
+    token: string | null,
+    setToken: Dispatch<SetStateAction<string | null>>;
 
     isPasswordCanChanged: boolean,
     setIsPasswordCanChanged: Dispatch<SetStateAction<boolean>>;

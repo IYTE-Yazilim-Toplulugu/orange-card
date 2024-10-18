@@ -8,8 +8,6 @@ import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import axios from 'axios';
 import { ModalContext } from '@/context/ModalContext';
-import { useRouter } from 'next/navigation';
-
 
 const ResetPasswordForm = () => {
     const { lang } = useContext(LanguageContext);
@@ -18,7 +16,6 @@ const ResetPasswordForm = () => {
     const [visiblePass, setVisiblePass] = useState<boolean>(false);
     const { setIsLoading, setIsPasswordCanChanged, setIsPasswordCannotChanged } = useContext(ModalContext);
 
-    const router = useRouter();
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();

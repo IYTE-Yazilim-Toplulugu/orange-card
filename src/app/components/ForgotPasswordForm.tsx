@@ -1,12 +1,11 @@
 "use client"
-import React, { FormEvent, useContext, useState } from 'react';
+import React, { FormEvent, useContext } from 'react';
 import { LanguageContext } from '@/context/LanguageContext';
 
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import axios from 'axios';
 import { ModalContext } from '@/context/ModalContext';
-import { useRouter } from 'next/navigation';
 
 
 const ForgotPassForm = () => {
