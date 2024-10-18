@@ -91,7 +91,7 @@ export const sendChangePassEmail : ({ receiver, token } : { receiver: string; to
         <div class="content">
             <p>Merhaba,</p>
             <p>Şifrenizi değiştirmek için bir talepte bulundunuz. Şifrenizi yenilemek için lütfen aşağıdaki butona tıklayın:</p>
-            <a href="${process.env.ENV_MODE == "development" ? `http://localhost:3000/change-password?token=${token}` : `https://orange.iyteyazilim.online/change-password?token=${token}`}" class="cta-button">Şifrenizi Değiştirin</a>
+            <a href="https://orange.iyteyazilim.online/change-password?token=${token}" class="cta-button">Şifrenizi Değiştirin</a>
             <p>Eğer bu talebi siz yapmadıysanız, lütfen bu e-postayı dikkate almayın. Hesabınız güvende kalacaktır.</p>
             <p>Sevgilerle,<br>Turuncu Tik Ekibi</p>
         </div>
