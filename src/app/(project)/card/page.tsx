@@ -1,6 +1,5 @@
 "use client"
 import axios from 'axios';
-import { Date } from 'mongoose';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import LogoCanvas from '../../components/canvases/Logo';
@@ -100,7 +99,7 @@ const CardPage = () => {
                 const token = localStorage.getItem("token");
                 const res = await axios.post("../../api/token", {token : token});
                 if (res.status == 200) {
-                    let name : string = res.data.user.fullName;
+                    const name : string = res.data.user.fullName;
                     let newName : string = "";
                     name.split(" ").map((n) => {
                         newName += n.toUpperCase() + " ";
