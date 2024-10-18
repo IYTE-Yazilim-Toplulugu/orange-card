@@ -101,8 +101,7 @@ export const sendChangePassEmail : ({ receiver, token } : { receiver: string; to
         </div>
     </div>
 </body>
-</html>
-            `,
+</html>`,
         });
 
     } catch {
