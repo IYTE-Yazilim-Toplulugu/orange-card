@@ -2,20 +2,98 @@
 import axios from 'axios';
 import { Date } from 'mongoose';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import LogoCanvas from '../../components/canvases/Logo';
+
+import EditIcon from '@mui/icons-material/Edit';
+
+import { Modal, Button, Box } from '@mui/material';
+import defaultImage from "@/images/default-profile-photo.jpg";
 
 import { Grid } from "react-loader-spinner";
 
-import bg from "@/images/bg-card.svg";
+import bg from "@/images/bg-orange.svg";
+import Logo from "@/images/turuncu-tik-logo-2.svg";
+import Image from 'next/image';
 
 const CardPage = () => {
     const [load, setLoad] = useState<boolean>(true);
     const [name, setName] = useState<string>();
     const [studentNo, setStudentNo] = useState<string>();
     const [date, setDate] = useState<Date>();
+    const [image, setImage] = useState<string>();
+    const [userId, setUserId] = useState<string>();
 
+    const [openModal, setOpenModal] = useState(false); 
     const router = useRouter();
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+    const handleImageClick = () => {
+        setOpenModal(true); // Resme tıklandığında modal açılır
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false); // Modal kapatma
+    };
+
+    // Fotoğrafı kare kırpma işlemi
+    const cropToSquare = (imgSrc: string, callback: (croppedImage: string) => void) => {
+        const img: HTMLImageElement = new window.Image();
+        img.src = imgSrc;
+        img.onload = () => {
+            const minSize = Math.min(img.width, img.height);
+            const canvas = document.createElement('canvas');
+            canvas.width = minSize;
+            canvas.height = minSize;
+
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+                ctx.drawImage(
+                    img,
+                    (img.width - minSize) / 2,
+                    (img.height - minSize) / 2,
+                    minSize,
+                    minSize,
+                    0,
+                    0,
+                    minSize,
+                    minSize
+                );
+                const croppedImage = canvas.toDataURL('image/png');
+                callback(croppedImage);
+            }
+        };
+    };
+
+    // Fotoğraf seçme işlemi
+    const handleSelectPhoto = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click(); // Dosya seçme inputunu aç
+        }
+    };
+
+    // Dosya seçme işlemi
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = async () => {
+                const dataUrl = reader.result as string;
+                cropToSquare(dataUrl, setImage); 
+                await saveImage();
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // Fotoğrafı veritabanına kaydetme
+    const saveImage = async () => {
+        try {
+            await axios.post("../../api/userimage", { user_id: userId, image: image});
+        } catch (error) {
+            alert(`Image cannot be changed: ${error}`);
+        }
+    };
 
     useEffect(() => {
         const checkUser = async () => {
@@ -27,6 +105,8 @@ const CardPage = () => {
                     setName(res.data.user.fullName);
                     setStudentNo(res.data.user.schoolNumber);
                     setDate(res.data.user.createdAt);
+                    setUserId(res.data.user._id);
+                    setImage(res.data.image?.image);
                 }
                 else {
                     router.replace("/login");
@@ -45,7 +125,7 @@ const CardPage = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
     }}
-    className="min-w-full min-h-screen p-4 bg-[#f56f00] flex flex-col justify-between items-center ">
+    className="h-screen p-4 bg-[#f56f00] flex flex-col justify-between items-center ">
         
         {
             load ? (
@@ -62,10 +142,19 @@ const CardPage = () => {
                 </div>
             ) : (
                 <>
-                    <div className='h-4/5 mt-2 relative z-0 '>
-                      <LogoCanvas />
+                    <div className='grid grid-cols-2 gap-4 px-4'>
+                        <div className='flex justify-center items-center'>
+                        <Image
+                            src={image || defaultImage} // Profil resmi veya default resim
+                            alt="User Image"
+                            className='rounded-full cursor-pointer'
+                            width={100}
+                            height={100}
+                            onClick={handleImageClick} // Resme tıklama ile modal açılır
+                        />
+                        </div>
+                        <Image className='pointer-event-none' src={Logo} alt='' />
                     </div>
-
 
                     <div className='flex flex-col gap-4 w-full p-8 '>
                         <div className=''>
@@ -82,11 +171,45 @@ const CardPage = () => {
                         </div>
                     </div>
 
-                    <div></div>
+                    <div className='h-4/5 mt-2 relative z-0 '>
+                      <LogoCanvas />
+                    </div>
 
                     <div>
                         <p className="text-white/70 text-center text-sm">Copyright 2024 © Yazılım Topluluğu</p>
                     </div>
+
+
+                    {/* Modal */}
+                    <Modal open={openModal} onClose={handleCloseModal}>
+                        <Box
+                            display="flex"
+                            flexDirection="column"
+                            justifyContent="center"
+                            alignItems="center"
+                            bgcolor="white"
+                            p={4}
+                            borderRadius={2}
+                            mx="auto"
+                            mt={10}
+                            maxWidth={500}
+                        >
+                            <div className="relative mb-8">
+                                <Image className='rounded-full border-2 border-black' src={image || defaultImage} alt="User Image" width={200} height={200} />
+                                <button className="absolute right-0 bottom-2 bg-black rounded-full p-4" onClick={handleSelectPhoto}>
+                                    <EditIcon />
+                                </button>
+                            </div>
+                            
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                style={{ display: 'none' }}
+                                accept="image/*"
+                                onChange={handleFileChange} // Dosya değişikliği
+                            />
+                        </Box>
+                    </Modal>
                 </>
             )
         }

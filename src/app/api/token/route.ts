@@ -1,4 +1,5 @@
 import ConnectDB from "@/config/db";
+import ProfilePictureModel from "@/schemas/image.schema";
 import UserModel from "@/schemas/user.schema";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,7 +11,8 @@ export const POST = async (request : NextRequest) => {
         const user = await UserModel.findOne({ token: token });
         
         if(user) {
-            return NextResponse.json({ message: "Member Found", user: user }, { status: 200 });
+            const image = await ProfilePictureModel.findOne({ user_id: user._id });
+            return NextResponse.json({ message: "Member Found", user: user, image: image }, { status: 200 });
         }
         else {
             return NextResponse.json({ message: "Member Cannot Found" }, { status: 404 });    
