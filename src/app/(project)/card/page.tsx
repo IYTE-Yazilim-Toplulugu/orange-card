@@ -87,7 +87,7 @@ const CardPage = () => {
     // Fotoğrafı veritabanına kaydetme
     const saveImage = async () => {
         try {
-            await axios.post("../../api/userimage", { user_id: userId, image: image});
+            await axios.post("../../api/userimage", { user_id: userId, image: image });
         } catch (error) {
             alert(`Image cannot be changed: ${error}`);
         }
@@ -184,21 +184,10 @@ const CardPage = () => {
 
 
                     {/* Modal */}
-                    <Modal open={openModal} onClose={handleCloseModal}>
-                        <Box
-                            display="flex"
-                            flexDirection="column"
-                            justifyContent="center"
-                            alignItems="center"
-                            bgcolor="white"
-                            p={4}
-                            borderRadius={2}
-                            mx="auto"
-                            mt={10}
-                            maxWidth={500}
-                        >
+                    <Modal className="flex justify-center items-center" open={openModal} onClose={handleCloseModal}>
+                        <div className='flex justify-center items-center w-fit h-fit'>
                             <div className="relative mb-8">
-                                <Image className='rounded-full border-2 border-black' src={image || defaultImage} alt="User Image" width={200} height={200} />
+                                <Image className='rounded-full border-2 border-black' src={image || defaultImage} alt="User Image" width={300} height={300} />
                                 <button className="absolute right-0 bottom-2 bg-black rounded-full p-4" onClick={handleSelectPhoto}>
                                     <EditIcon />
                                 </button>
@@ -211,7 +200,7 @@ const CardPage = () => {
                                 accept="image/*"
                                 onChange={handleFileChange} // Dosya değişikliği
                             />
-                        </Box>
+                        </div>
                     </Modal>
                 </>
             )

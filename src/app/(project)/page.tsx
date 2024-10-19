@@ -12,7 +12,6 @@ import { shopData } from "../data";
 import ShopCard from "../components/ShopCard";
 
 export default function Home() {
-  const router = useRouter();
   const { lang } = useContext(LanguageContext);
   return (
     <div className="h-full relative">
@@ -40,7 +39,7 @@ export default function Home() {
           {
             shopData.map((sd, key) => {
               return (
-                <ShopCard name={lang == "tr" ? sd.name_tr : sd.name_en} advantage={lang == "tr" ? sd.advantage_tr : sd.advantage_en} location={sd.location} />
+                <ShopCard key={key} name={lang == "tr" ? sd.name_tr : sd.name_en} advantage={lang == "tr" ? sd.advantage_tr : sd.advantage_en} location={sd.location} />
               )
             })
           }
