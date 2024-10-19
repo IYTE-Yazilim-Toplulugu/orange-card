@@ -87,7 +87,7 @@ const CardPage = () => {
     // Fotoğrafı veritabanına kaydetme
     const saveImage = async () => {
         try {
-            await axios.post("../../api/userimage", { user_id: userId, image: image });
+            await axios.post("../../api/userimage", { user_id: userId, image: image});
         } catch (error) {
             alert(`Image cannot be changed: ${error}`);
         }

@@ -10,7 +10,8 @@ export const POST = async (req: NextRequest) => {
         const pp = await ProfilePictureModel.findOne({ user_id: data.user_id });
 
         if (pp) {
-            await ProfilePictureModel.updateOne({ user_id: data.user_id }, { image: data.image });
+            const ppm = await ProfilePictureModel.updateOne({ user_id: data.user_id }, { image: data.image });
+            console.log(ppm);
             return NextResponse.json({ message: "Image Successfuly Changed" }, { status: 201 });
         }
         else {

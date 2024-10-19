@@ -1,6 +1,5 @@
 "use client"
 import { LanguageContext } from "@/context/LanguageContext";
-import { useRouter } from "next/navigation";
 import { useContext } from "react";
 
 import OrangeTik from "@/images/turuncu-tik-logo.svg";
