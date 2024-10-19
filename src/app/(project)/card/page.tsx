@@ -26,6 +26,8 @@ const CardPage = () => {
     const router = useRouter();
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+    let newImage;
+
     const handleImageClick = () => {
         setOpenModal(true); // Resme tıklandığında modal açılır
     };
@@ -35,10 +37,10 @@ const CardPage = () => {
     };
 
     // Fotoğrafı kare kırpma işlemi
-    const cropToSquare = (imgSrc: string, callback: (croppedImage: string) => void) => {
+    const cropToSquare = (imgSrc: string) => {
         const img: HTMLImageElement = new window.Image();
         img.src = imgSrc;
-        img.onload = () => {
+        img.onload = async () => {
             const minSize = Math.min(img.width, img.height);
             const canvas = document.createElement('canvas');
             canvas.width = minSize;
@@ -58,7 +60,12 @@ const CardPage = () => {
                     minSize
                 );
                 const croppedImage = canvas.toDataURL('image/png');
-                callback(croppedImage);
+                setImage(croppedImage);
+                newImage = croppedImage;
+
+                
+                await saveImage();
+
             }
         };
     };
@@ -71,14 +78,13 @@ const CardPage = () => {
     };
 
     // Dosya seçme işlemi
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             const reader = new FileReader();
-            reader.onloadend = async () => {
+            reader.onloadend = () => {
                 const dataUrl = reader.result as string;
-                cropToSquare(dataUrl, setImage); 
-                await saveImage();
+                cropToSquare(dataUrl);
             };
             reader.readAsDataURL(file);
         }
@@ -87,7 +93,7 @@ const CardPage = () => {
     // Fotoğrafı veritabanına kaydetme
     const saveImage = async () => {
         try {
-            await axios.post("../../api/userimage", { user_id: userId, image: image});
+            await axios.post("../../api/userimage", { user_id: userId, image: newImage!});
         } catch (error) {
             alert(`Image cannot be changed: ${error}`);
         }
