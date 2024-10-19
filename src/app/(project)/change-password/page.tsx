@@ -52,7 +52,7 @@ const ChangePassword = () => {
       <PasswordChangedModal />
       <PasswordNotChangedModal />
 
-      <div className="relative w-full h-full">
+        <div className="relative w-full h-full">
             <LanguageBtn />
         </div>
         <Image src={lang == "tr" ? bgTR : bgEn} className='w-full pointer-events-none' alt="image" />
