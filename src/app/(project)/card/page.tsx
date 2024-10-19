@@ -6,7 +6,7 @@ import LogoCanvas from '../../components/canvases/Logo';
 
 import EditIcon from '@mui/icons-material/Edit';
 
-import { Modal, Box } from '@mui/material';
+import { Modal } from '@mui/material';
 import defaultImage from "@/images/default-profile-photo.jpg";
 
 import { Grid } from "react-loader-spinner";
